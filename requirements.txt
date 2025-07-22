@@ -1,0 +1,5 @@
+zenml[server]==0.84.0
+requests
+beautifulsoup4
+python-dotenv
+pymongo

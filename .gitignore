@@ -1,0 +1,9 @@
+.zen
+data
+.cache
+.env
+test.ipynb
+/**/*__pycache__
+venv/
+.idea
+
