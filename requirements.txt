@@ -3,3 +3,14 @@ requests
 beautifulsoup4
 python-dotenv
 pymongo
+qdrant-client
+streamlit
+openai
+rapidfuzz
+sentence-transformers
+jinja2
+transformers
+datasets
+peft
+accelerate
+bitsandbytes

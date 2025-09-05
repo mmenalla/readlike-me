@@ -11,19 +11,35 @@ def get_soup(url: str) -> BeautifulSoup:
     res.raise_for_status()
     return BeautifulSoup(res.text, "html.parser")
 
+
+def get_soup(url: str) -> BeautifulSoup:
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return BeautifulSoup(response.text, "html.parser")
+
+
 def get_book_and_author_description(book_url: str) -> tuple[str | None, str | None]:
-    soup = get_soup(book_url)
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+    response = requests.get(book_url, headers=headers)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
 
-    # Book description
-    description_tag = soup.select_one("#description span[style='display:none'], #description span")
-    book_description = description_tag.get_text(strip=True) if description_tag else None
+    # --- BOOK DESCRIPTION ---
+    book_desc_tag = soup.select_one(
+        "div.BookPageMetadataSection__description span.Formatted"
+    )
+    book_description = book_desc_tag.get_text(strip=True) if book_desc_tag else None
 
-    # Author description
-    author_bio_tag = soup.select_one("div[data-testid='author-info'] span[data-testid='description']")
-    if not author_bio_tag:
-        author_bio_tag = soup.select_one(".aboutAuthorInfo span[style='display:none'], .aboutAuthorInfo span")
-
-    author_description = author_bio_tag.get_text(strip=True) if author_bio_tag else None
+    # --- AUTHOR DESCRIPTION ---
+    author_desc_tag = soup.select_one(
+        "div.AuthorPreview div.TruncatedContent__text--medium span.Formatted"
+    )
+    author_description = author_desc_tag.get_text(strip=True) if author_desc_tag else None
 
     return book_description, author_description
 
@@ -58,7 +74,7 @@ def crawl_goodreads_read_shelf(user_id: str, shelf: str = "read", page: int = 1)
     )
     metadata["timestamp"] = datetime.now().isoformat()
     step_context = get_step_context()
-    step_context.add_output_metadata(output_name="crawled_links", metadata=metadata)
+    step_context.add_output_metadata(output_name="output", metadata=metadata)
 
     return books
 

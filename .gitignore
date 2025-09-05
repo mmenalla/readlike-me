@@ -6,4 +6,9 @@ test.ipynb
 /**/*__pycache__
 venv/
 .idea
-
+rag-app
+utils/lora-alpaca-checkpoints
+utils/lora-alpaca-final
+role_based_dataset.jsonl
+utils/instruction_dataset.jsonl
+utils/instruction_dataset_alpaca.jsonl

@@ -2,6 +2,9 @@ import argparse
 import os
 from dotenv import load_dotenv
 from pipelines.goodreads_pipeline import goodreads_pipeline
+from pipelines.ids_pipeline import ids_pipeline
+from pipelines.rag_pipeline import rag_pipeline
+
 
 def main():
     load_dotenv()
@@ -14,7 +17,9 @@ def main():
     if not args.user_id:
         raise ValueError("No user_id provided via argument or .env file.")
 
-    goodreads_pipeline(user_id=args.user_id)
+    # goodreads_pipeline(user_id=args.user_id)
+    # rag_pipeline()
+    ids_pipeline()
 
 if __name__ == "__main__":
     main()
