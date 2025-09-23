@@ -92,7 +92,6 @@ Requirements:
 
 Do not add any extra text or explanation. Only output valid JSON.
 """.strip()
-    print(prompt)
     return prompt
 
 # --- OpenAI annotation call ---

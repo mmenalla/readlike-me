@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
 import os
 import time
-import json
 import openai
 from uuid import uuid4
 from dotenv import load_dotenv
