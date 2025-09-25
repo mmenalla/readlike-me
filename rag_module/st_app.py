@@ -108,8 +108,8 @@ def search_prompt(prompt: str, author: str, top_k: int = TOP_K):
         if para not in seen_paragraphs:
             seen_paragraphs.add(para)
             deduped_points.append(pt)
-        if len(deduped_points) >= top_k:
-            break
+        # if len(deduped_points) >= top_k:
+        #     break
 
     results = []
     for pt in deduped_points:
@@ -162,7 +162,7 @@ def rerank_chunks(query: str, chunks: list):
     pairs = [(query, pt["payload"]["paragraph"]) for pt in chunks]
     scores = reranker.predict(pairs)
     sorted_chunks = [chunk for _, chunk in sorted(zip(scores, chunks), key=lambda x: x[0], reverse=True)]
-    return sorted_chunks
+    return sorted_chunks[:TOP_K]
 
 def run_inference_lora(author_name, user_prompt, max_length=256, max_sentences=5):
     prompt = f"{user_prompt} Mimic the style of {author_name}."
@@ -198,7 +198,8 @@ def run_inference_rag(author_name, user_prompt, max_sentences=5):
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-st.title("READLikeMe - Mimic literary style LLM")
+st.title("Mimic literary style LLM")
+# st.title("READLikeMe")
 
 selected_author_key = st.selectbox("Select author:", list(AUTHORS.keys()))
 selected_author_fullname = AUTHORS[selected_author_key]
