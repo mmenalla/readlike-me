@@ -15,7 +15,7 @@ openai.api_key = OPENAI_API_KEY
 
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", 6333))
-COLLECTION_NAME = "annotated_paragraphs_1"
+COLLECTION_NAME = "vdb1"
 HF_DATASET = "megi/author-style-rag-annotated"
 SPLIT = "train"
 BATCH_SIZE = 50
