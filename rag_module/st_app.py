@@ -170,7 +170,7 @@ def run_inference_lora(author_name, user_prompt, max_length=256, max_sentences=5
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
-            max_new_tokens=300,  # ✅ generate up to 300 new tokens
+            max_new_tokens=300,
             do_sample=True,
             temperature=0.7,
             top_p=0.9,
