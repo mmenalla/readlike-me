@@ -14,7 +14,7 @@ from transformers import (
 from peft import LoraConfig, get_peft_model, TaskType
 
 # --- CONFIG ---
-MODEL_NAME = "meta-llama/Llama-2-7b-hf"  # smaller model recommended for testing
+MODEL_NAME = "meta-llama/Llama-2-7b-hf"
 FINETUNED_MODEL_DIR = "./lora_finetuned_authors"
 BATCH_SIZE = 1
 EPOCHS = 1
@@ -25,16 +25,14 @@ DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"
 # --- DATA ---
 DATA_FILE = "fine_tune_metallama.jsonl"
 
-# Load dataset
 ds = load_dataset("json", data_files=DATA_FILE)
 
-# Take only the first 10 records for testing
 dataset = ds["train"]
 print(f"Original dataset size: {len(dataset)}")
 
 # --- TOKENIZER ---
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-tokenizer.pad_token = tokenizer.eos_token  # LLaMA models don't have pad token
+tokenizer.pad_token = tokenizer.eos_token
 
 def tokenize_fn(example):
     # Concatenate instruction + input + output
