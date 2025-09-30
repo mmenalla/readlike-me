@@ -103,7 +103,7 @@ python run.py --user_id 12345678
 ### Read from MongoDB -> embed -> store in Qdrant
 
 ```bash 
-python rag-app/populate_qdrant.py
+python rag_module-app/populate_qdrant.py
 ```
 
 ## RAG System
@@ -123,4 +123,31 @@ After approval:
 ```bash
 pip install huggingface_hub
 huggingface-cli login
+```
+
+```
+Fine-tune only on author conditioning.
+
+Let RAG handle topic/mood/style_tags dynamically at inference.
+
+Keeps the fine-tuned model smaller and more general, avoids overfitting on rare metadata combinations.
+
+Example fine-tune JSONL record:
+
+{
+  "instruction": "Write a paragraph describing a stormy night. Mimic the style of Tolstoy.",
+  "input": "",
+  "output": "Instead of going into the drawing-room, where he heard voices, he stopped on the terrace..."
+}
+
+
+Then at inference:
+
+User prompt: "Describe a sunny day."
+
+Author: "Kafka" → append to instruction: "Mimic the style of Kafka"
+
+RAG retrieves documents filtered by topic=mood/style_tags relevant to sunny day.
+
+Model generates output using retrieved context.
 ```
